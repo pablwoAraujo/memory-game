@@ -1,3 +1,30 @@
+// StopWatch
+let currentTime = 0;
+let stopWatchTimer = setInterval(stopwatch, 1000);
+let stopwatchElement = document.querySelector("#stopwatch");
+
+function stopwatch() {
+  currentTime++;
+  stopwatchElement.textContent = format(currentTime);
+}
+
+function format(time) {
+  let number = time;
+  let hours = Math.floor(number / 3600);
+  let minutes = Math.floor((number - (hours*3600)) / 60);
+  let seconds = number - (hours*3600) - (minutes*60);
+
+  return `${toLocaleString(hours)}:${toLocaleString(minutes)}:${toLocaleString(seconds)}`;
+}
+
+function toLocaleString(value) {
+  return value.toLocaleString("pt-BR", {
+    minimumIntegerDigits: 2,
+    useGrouping: false,
+  });
+}
+// 
+
 const emojis = [
   "🐶",
   "🐶",
@@ -55,6 +82,7 @@ function checkMatch() {
   openCards = [];
 
   if (document.querySelectorAll(".boxMatch").length === emojis.length) {
-    alert("Parabéns, você ganhou!");
+    clearInterval(stopWatchTimer);
+    alert(`Parabéns, você concluiu o jogo em ${format(currentTime)}!`);
   }
 }
